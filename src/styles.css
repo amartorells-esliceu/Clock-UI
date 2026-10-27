@@ -1,25 +1,261 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+  color-scheme: light dark;
+  font:
+    16px "Roboto",
+    sans-serif;
+  --background: #f6f3fb;
+  --surface: #fff;
+  --on-surface: #241d2b;
+  --primary: #6750a4;
+  --on-primary: #fff;
+  --primary-container: #e9ddff;
+  --outline: #79747e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #141218;
+    --surface: #211f26;
+    --on-surface: #eee8f4;
+    --primary: #d0bcff;
+    --on-primary: #241d2b;
+    --primary-container: #403650;
+    --outline: #938f99;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
-  flex-direction: column;
+  min-height: 100vh;
   margin: 0;
-  height: 100vh;
-}
-
-nav > ul {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-}
-
-nav > ul > li {
-  flex: 1 1 auto;
-  text-align: center;
+  background: var(--background);
+  color: var(--on-surface);
 }
 
 main {
+  flex: 1;
+  align-self: center;
+  min-width: 0;
+  width: 100%;
+  max-width: 700px;
+  margin: 32px auto;
+  padding: 32px;
+  border-radius: 24px;
+  background-color: var(--surface);
+  text-align: center;
+}
+
+main > section {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Mostrar cada sección */
+main > section:target,
+main:not(:has(> section:target)) > #clock {
   display: flex;
 }
 
-main > section:not(:target) {
-  display: none;
+main h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 80px;
+  height: 100vh;
+  padding: 24px 8px;
+}
+
+nav a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 64px;
+  min-height: 64px;
+  border-radius: 16px;
+  color: var(--on-surface);
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+}
+
+nav a .material-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 32px;
+  border-radius: 16px;
+  font-size: 20px;
+}
+
+/* Fons de la icona en passar-hi el ratolí o en la pestanya activa */
+nav a:hover,
+nav a[aria-current="page"] .material-icons {
+  background-color: var(--primary-container);
+}
+
+/* Color del text de la pestanya activa */
+nav a[aria-current="page"] {
+  color: var(--primary);
+}
+
+x-clock,
+x-alarm,
+x-timer,
+x-stopwatch,
+.items,
+.timers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+time {
+  color: var(--primary);
+  font-size: 4rem;
+  font-weight: 400;
+}
+
+.alarm,
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+
+.alarm {
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--background);
+}
+
+.alarm[ringing],
+.current-interval {
+  border: 2px solid var(--primary);
+}
+
+.current-interval {
+  padding: 2px;
+}
+
+.alarm[paused] {
+  opacity: 0.6;
+}
+
+.timers {
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+label {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-width: 0;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--background);
+  font-size: 14px;
+}
+
+input {
+  width: 100%;
+  min-height: 56px;
+  padding: 12px;
+  border: 1px solid var(--outline);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--on-surface);
+  font: inherit;
+}
+
+input:focus {
+  border: 2px solid var(--primary);
+}
+
+button {
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--primary-container);
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 22px;
+}
+
+button:hover {
+  filter: brightness(0.92);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+button.primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+@media (max-width: 600px) {
+  body {
+    display: block;
+    padding-bottom: 24px;
+  }
+
+  nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px;
+    border-top: 1px solid var(--outline);
+    background-color: var(--surface);
+  }
+
+  nav a {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  main {
+    width: 100%;
+    margin: 16px auto;
+    padding: 24px 16px;
+  }
+
+  .timers {
+    flex-direction: column;
+  }
 }

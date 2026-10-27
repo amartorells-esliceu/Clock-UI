@@ -10,10 +10,25 @@ customElements.define("x-clock", Clock);
 customElements.define("x-stopwatch", Stopwatch);
 customElements.define("x-timer", Timer);
 
+const navigation = document.querySelector("nav");
 const alarm = document.querySelector("x-alarm");
 const timer = document.querySelector("x-timer");
 const alarmSound = new Audio(alarmSoundUrl);
 const timerSound = new Audio(timerSoundUrl);
+
+function updateCurrentPage() {
+  const hash = window.location.hash || "#clock";
+  navigation.querySelectorAll("a").forEach((link) => {
+    if (link.hash === hash) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
+}
+
+window.addEventListener("hashchange", updateCurrentPage);
+updateCurrentPage();
 
 alarmSound.loop = true;
 alarmSound.preload = "auto";

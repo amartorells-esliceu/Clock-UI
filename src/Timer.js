@@ -50,7 +50,15 @@ export default class Timer extends HTMLElement {
   }
 
   set loop(value) {
-    this.toggleAttribute("loop", Boolean(value));
+    const enabled = Boolean(value);
+    this.toggleAttribute("loop", enabled);
+    this.querySelector(".loop").classList.toggle("primary", enabled);
+    this.querySelector(".no-loop").classList.toggle("primary", !enabled);
+  }
+
+  connectedCallback() {
+    this.querySelector(".loop").classList.toggle("primary", this.loop);
+    this.querySelector(".no-loop").classList.toggle("primary", !this.loop);
   }
 
   get paused() {
@@ -122,10 +130,10 @@ export default class Timer extends HTMLElement {
     this.paused = false;
     if (this.startTime) {
       const inputs = this.querySelectorAll("input");
-      const currentInput = this.querySelector(".current-interval");
       const intervals = Array.from(inputs, ({ value }) =>
         new Date(`1970-01-01T${value}Z`).getTime(),
       );
+      const currentInput = this.querySelector(".current-interval");
       const cumulativeTime = intervals
         .slice(0, [...inputs].indexOf(currentInput) + 1)
         .reduce((a, b) => a + b, 0);

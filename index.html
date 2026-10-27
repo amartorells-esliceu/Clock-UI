@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="ca">
   <head>
     <meta charset="UTF-8" />
-    <title>Time</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rellotge</title>
     <link rel="stylesheet" href="/src/styles.css" />
     <link
       rel="stylesheet"
@@ -10,77 +11,104 @@
     />
   </head>
   <body>
-    <nav>
-      <ul>
-        <li><a href="#clock">Clock</a></li>
-        <li><a href="#alarm">Alarm</a></li>
-        <li><a href="#stopwatch">Stopwatch</a></li>
-        <li><a href="#timer">Timer</a></li>
-      </ul>
+    <nav aria-label="Vistes">
+      <a href="#clock"
+        ><span class="material-icons" aria-hidden="true">schedule</span
+        >Rellotge</a
+      >
+      <a href="#alarm"
+        ><span class="material-icons" aria-hidden="true">alarm</span>Alarmes</a
+      >
+      <a href="#timer"
+        ><span class="material-icons" aria-hidden="true">hourglass_empty</span
+        >Temporitzador</a
+      >
+      <a href="#stopwatch"
+        ><span class="material-icons" aria-hidden="true">timer</span
+        >Cronòmetre</a
+      >
     </nav>
     <main>
       <section id="clock">
-        <x-clock>
-          <time>00:00:00</time>
-        </x-clock>
+        <h1>Rellotge</h1>
+        <x-clock><time>00:00:00</time></x-clock>
       </section>
       <section id="alarm">
+        <h1>Alarmes</h1>
         <x-alarm>
           <template>
-            <section class="alarms">
-              <input type="time" min="00:00" max="23:59" step="1" />
-              <section class="controls">
-                <button class="start material-icons">alarm_on</button>
-                <button class="pause material-icons">alarm_off</button>
-                <button class="delete material-icons">delete</button>
-              </section>
+            <section class="alarm">
+              <input type="time" aria-label="Hora de l'alarma" />
+              <button class="start primary material-icons" aria-label="Activar">
+                alarm_on
+              </button>
+              <button class="pause material-icons" aria-label="Pausar">
+                alarm_off
+              </button>
+              <button class="delete material-icons" aria-label="Eliminar">
+                delete
+              </button>
             </section>
           </template>
           <section class="items"></section>
           <section class="controls">
-            <button class="add material-icons">add_alarm</button>
+            <button
+              class="add primary material-icons"
+              aria-label="Afegir alarma"
+            >
+              add
+            </button>
+            <span>Afegeix una alarma</span>
           </section>
         </x-alarm>
       </section>
+      <section id="timer">
+        <h1>Temporitzador</h1>
+        <x-timer>
+          <time datetime="PT0S">00:00:00.00</time>
+          <section class="timers">
+            <label
+              >Interval 1<input type="time" value="00:03:00" step="1"
+            /></label>
+            <label
+              >Interval 2<input type="time" value="00:01:00" step="1"
+            /></label>
+          </section>
+          <section class="controls">
+            <button class="start primary material-icons" aria-label="Iniciar">
+              play_arrow
+            </button>
+            <button class="pause material-icons" aria-label="Pausar">
+              pause
+            </button>
+            <button class="restart material-icons" aria-label="Reiniciar">
+              restart_alt
+            </button>
+            <button class="loop material-icons" aria-label="Repetir">
+              loop
+            </button>
+            <button class="no-loop material-icons" aria-label="No repetir">
+              sync_disabled
+            </button>
+          </section>
+        </x-timer>
+      </section>
       <section id="stopwatch">
+        <h1>Cronòmetre</h1>
         <x-stopwatch>
           <time datetime="PT0S">00:00:00.00</time>
           <section class="controls">
-            <button class="start material-icons">timer</button>
-            <button class="pause material-icons">timer_off</button>
-            <button class="restart material-icons">restart_alt</button>
+            <button class="start primary material-icons" aria-label="Iniciar">
+              play_arrow
+            </button>
+            <button class="pause material-icons" aria-label="Pausar">
+              pause
+            </button>
+            <button class="restart material-icons" aria-label="Reiniciar">
+              restart_alt
+            </button>
           </section>
         </x-stopwatch>
-      </section>
-      <section id="timer">
-        <x-timer>
-          <time datetime="PT0S">00:00:00.00</time>
-          <section class="items">
-            <section class="timers">
-              <input
-                type="time"
-                min="00:00:00"
-                max="23:59:59"
-                value="00:03:00"
-                step="1"
-              />
-              <input
-                type="time"
-                min="00:00:00"
-                max="23:59:59"
-                value="00:01:00"
-                step="1"
-              />
-            </section>
-          </section>
-          <section class="controls">
-            <button class="start material-icons">timer</button>
-            <button class="pause material-icons">timer_off</button>
-            <button class="restart material-icons">restart_alt</button>
-            <button class="loop material-icons">loop</button>
-            <button class="no-loop material-icons">sync_disabled</button>
-          </section>
-        </x-timer>
       </section>
     </main>
     <script type="module" src="/src/app.js"></script>
